@@ -1,3 +1,7 @@
+.vscode/
+dependencies/
+compile.txt
+
 # Compiled Object files
 *.slo
 *.lo
