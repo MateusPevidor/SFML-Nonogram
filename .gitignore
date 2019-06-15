@@ -1,6 +1,6 @@
 .vscode/
 dependencies/
-compile.txt
+compile.sh
 
 # Compiled Object files
 *.slo

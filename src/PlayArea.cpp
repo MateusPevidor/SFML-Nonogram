@@ -1,5 +1,4 @@
 #include "PlayArea.hpp"
-#include <iostream>
 
 PlayArea::PlayArea(int lines, int cols, int guideSize) {
 
@@ -11,8 +10,10 @@ PlayArea::PlayArea(int lines, int cols, int guideSize) {
   this->backgroundSprite.setTexture(TextureManager::getInstance().getTexture("../assets/images/play_area.png"));
   this->backgroundSprite.setPosition(this->position);
 
+  // Cálculo do tamanho de cada célula do campo
   float cellSize = (lines > cols) ? 622/(guideSize + lines) : 622/(guideSize + cols);
 
+  // Criação do array 2D de quadrados
   for (int j = 0; j < lines; j++) {
     std::vector <Quadrado> q;
     this->quadrados.push_back(q);

@@ -7,12 +7,12 @@
 
 class PlayArea {
   private:
-    sf::Sprite backgroundSprite;
-    sf::Vector2f position;
+    sf::Sprite backgroundSprite; // Imagem de fundo
+    sf::Vector2f position; // Posição
   
   public:
-    std::vector <std::vector <Quadrado>> quadrados;
     PlayArea(int lines, int cols, int guideSize);
+    std::vector <std::vector <Quadrado>> quadrados;
     void draw(sf::RenderWindow &window);
 };
 

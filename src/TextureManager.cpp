@@ -1,4 +1,4 @@
-#include "TextureManager.h"
+#include "TextureManager.hpp"
 
 TextureManager::TextureManager() {
   textures = std::map<std::string, sf::Texture>();
@@ -6,7 +6,6 @@ TextureManager::TextureManager() {
 
 TextureManager& TextureManager::getInstance() {
   static TextureManager instance;
-
   return instance;
 }
 

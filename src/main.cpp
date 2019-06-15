@@ -3,16 +3,13 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/Texture.hpp>
 
 #include "PlayArea.hpp"
-#include "TextureManager.h"
+#include "TextureManager.hpp"
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(800, 800), "UltimatePix");
   window.setVerticalSyncEnabled(1);
-
-  
 
   PlayArea playArea(5, 5, 2);
 

@@ -2,7 +2,7 @@
 #define QUADRADO_H
 
 #include <SFML/Graphics.hpp>
-#include "TextureManager.h"
+#include "TextureManager.hpp"
 
 class Quadrado {
   private:

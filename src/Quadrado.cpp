@@ -17,12 +17,6 @@ Quadrado::Quadrado(int x, int y, int w, int h) {
 
 }
 
-// void Quadrado::updateTexture() {
-//   this->crossSprite.setTexture(this->texture);
-//   this->crossSprite.setPosition(sf::Vector2f(this->position.x * 1.126, this->position.y * 1.126)); // Posiciona o X no centro do quadrado
-//   this->crossSprite.setScale(sf::Vector2f(this->dimensions.x/65.0*0.745, this->dimensions.y/65.0*0.745)); // Redimensiona a imagem
-// }
-
 void Quadrado::draw(sf::RenderWindow &window) {
   if (this->state == 1)
     window.draw(this->shape);
