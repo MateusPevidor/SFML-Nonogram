@@ -1,5 +1,5 @@
-#ifndef QUADRADO_H
-#define QUADRADO_H
+#ifndef QUADRADO_HPP
+#define QUADRADO_HPP
 
 #include <SFML/Graphics.hpp>
 #include "TextureManager.hpp"

@@ -1,9 +1,11 @@
-#ifndef PLAY_AREA_H
-#define PLAY_AREA_H
+#ifndef PLAY_AREA_HPP
+#define PLAY_AREA_HPP
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <cmath>
 #include "Quadrado.hpp"
+#include "GuideLine.hpp"
 
 class PlayArea {
   private:
@@ -11,8 +13,10 @@ class PlayArea {
     sf::Vector2f position; // Posição
   
   public:
-    PlayArea(int lines, int cols, int guideSize);
+    PlayArea();
+    PlayArea(int rows, int cols, int guideSize);
     std::vector <std::vector <Quadrado>> quadrados;
+    std::vector <GuideLine> guideLines;
     void draw(sf::RenderWindow &window);
 };
 

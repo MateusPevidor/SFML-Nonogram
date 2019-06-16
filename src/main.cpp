@@ -4,14 +4,16 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-#include "PlayArea.hpp"
+#include "GameManager.hpp"
 #include "TextureManager.hpp"
+
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(800, 800), "UltimatePix");
   window.setVerticalSyncEnabled(1);
 
-  PlayArea playArea(5, 5, 2);
+  GameManager::getInstance().generatePlayArea(7, 5, 2);
+  
 
   while (window.isOpen()) {
     sf::Event event;
@@ -21,9 +23,9 @@ int main() {
     }
 
     window.clear();
-
-    playArea.draw(window);
-
+    
+    GameManager::getInstance().getPlayArea().draw(window);
+    
     window.display();
   }
 

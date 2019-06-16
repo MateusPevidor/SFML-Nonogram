@@ -1,5 +1,5 @@
-#ifndef TEXTURE_MANAGER_H
-#define TEXTURE_MANAGER_H
+#ifndef TEXTURE_MANAGER_HPP
+#define TEXTURE_MANAGER_HPP
 
 #include <SFML/Graphics.hpp>
 #include <map>
@@ -8,7 +8,6 @@
 class TextureManager {
   private:
     TextureManager();
-    TextureManager(TextureManager const&);
     std::map <std::string, sf::Texture> textures;
 
   public:
