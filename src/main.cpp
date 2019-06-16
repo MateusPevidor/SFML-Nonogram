@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameManager.hpp"
+#include "LevelManager.hpp"
 #include "TextureManager.hpp"
 
 
@@ -12,7 +13,9 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(800, 800), "UltimatePix");
   window.setVerticalSyncEnabled(1);
 
-  GameManager::getInstance().generatePlayArea(7, 5, 2);
+  LevelManager::getInstance().loadCustomLevel("level1");
+  
+  GameManager::getInstance().generatePlayArea("level1");
   
 
   while (window.isOpen()) {

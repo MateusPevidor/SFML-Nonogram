@@ -20,12 +20,11 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
 
   int offsetX = cellSize-2 + this->position.x + 6 + guideSize * cellSize + (cols-1) * cellSize - 678;
   int offsetY = cellSize-2 + this->position.y + 6 + guideSize * cellSize + (rows-1) * cellSize - 744;
-  // Criação do array 2D de quadrados
-  for (int j = 0; j < rows; j++) {
-    std::vector <Quadrado> q;
-    this->quadrados.push_back(q);
+  for (int j = 0; j < rows; j++) { // Criação da matriz de quadrados
+    std::vector <Cell> q;
+    this->cells.push_back(q);
     for (int i = 0; i < cols; i++) {
-      this->quadrados.at(j).push_back(Quadrado(
+      this->cells.at(j).push_back(Cell(
         (this->position.x + 6 - offsetX + guideSize * cellSize + i * cellSize),
         (this->position.y + 6 - offsetY + guideSize * cellSize + j * cellSize),
         cellSize-2, cellSize-2));
@@ -53,9 +52,9 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
 void PlayArea::draw(sf::RenderWindow &window) {
   window.draw(backgroundSprite);
 
-  for (int i = 0; i < this->quadrados.size(); i++) {
-    for (int j = 0; j < this->quadrados.at(i).size(); j++) {
-      this->quadrados.at(i).at(j).draw(window);
+  for (int i = 0; i < this->cells.size(); i++) {
+    for (int j = 0; j < this->cells.at(i).size(); j++) {
+      this->cells.at(i).at(j).draw(window);
     }
   }
 

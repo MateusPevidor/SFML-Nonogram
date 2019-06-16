@@ -1,16 +1,19 @@
 #include "GameManager.hpp"
 #include <iostream>
 
-GameManager::GameManager() {
-
-}
+GameManager::GameManager() {}
 
 GameManager& GameManager::getInstance() {
   static GameManager instance;
   return instance;
 }
 
-void GameManager::generatePlayArea(int rows, int cols, int guideSize) {
+void GameManager::generatePlayArea(std::string levelID) {
+  Level level = LevelManager::getInstance().getLevel(levelID);
+  int rows = level.getRowCount(),
+      cols = level.getColCount(),
+      guideSize = level.getGuideSize();
+  
   PlayArea generatedPlayArea(rows, cols, guideSize);
   this->setPlayArea(generatedPlayArea);
 }

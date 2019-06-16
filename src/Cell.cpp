@@ -1,6 +1,6 @@
-#include "Quadrado.hpp"
+#include "Cell.hpp"
 
-Quadrado::Quadrado(int x, int y, int w, int h) {
+Cell::Cell(int x, int y, int w, int h) {
   this->position.x = x;
   this->position.y = y;
   this->dimensions.x = w;
@@ -17,17 +17,17 @@ Quadrado::Quadrado(int x, int y, int w, int h) {
 
 }
 
-void Quadrado::draw(sf::RenderWindow &window) {
+void Cell::draw(sf::RenderWindow &window) {
   if (this->state == 1)
     window.draw(this->shape);
   else if (this->state == 2)
     window.draw(this->crossSprite);
 }
 
-int Quadrado::getState() {
+int Cell::getState() {
   return this->state;
 }
 
-void Quadrado::setState(int state) {
+void Cell::setState(int state) {
   this->state = state;
 }

@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <cmath>
-#include "Quadrado.hpp"
+#include "Cell.hpp"
 #include "GuideLine.hpp"
 
 class PlayArea {
@@ -15,8 +15,8 @@ class PlayArea {
   public:
     PlayArea();
     PlayArea(int rows, int cols, int guideSize);
-    std::vector <std::vector <Quadrado>> quadrados;
-    std::vector <GuideLine> guideLines;
+    std::vector <std::vector <Cell>> cells; // Quadrados
+    std::vector <GuideLine> guideLines; // Linhas
     void draw(sf::RenderWindow &window);
 };
 

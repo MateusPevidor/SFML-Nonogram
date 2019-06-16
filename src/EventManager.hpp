@@ -7,4 +7,5 @@ class EventHandler {
   public:
     int oi;
 };
+
 #endif

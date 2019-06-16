@@ -11,7 +11,7 @@ class TextureManager {
     std::map <std::string, sf::Texture> textures;
 
   public:
-    static TextureManager& getInstance(); // Singleton para otimização do uso de memória
+    static TextureManager& getInstance();
     void addTexture(std::string path);
     sf::Texture& getTexture(std::string id);
 
