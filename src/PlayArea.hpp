@@ -9,9 +9,10 @@
 
 class PlayArea {
   private:
-    sf::RectangleShape background;
-    std::vector <Line> borders;
+    sf::RectangleShape background; // Fundo
+    std::vector <Line> borders; // Bordas
     sf::Vector2f position; // Posição
+    sf::Vector2f dimensions; // Tamanho
   
   public:
     PlayArea();

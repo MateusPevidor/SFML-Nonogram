@@ -1,6 +1,8 @@
 .vscode/
 dependencies/
-compile.sh
+compile.*
+*.exe
+sfml-app
 
 # Compiled Object files
 *.slo
