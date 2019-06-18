@@ -13,9 +13,9 @@ int main() {
   sf::RenderWindow window(sf::VideoMode(800, 800), "UltimatePix");
   window.setVerticalSyncEnabled(1);
 
-  LevelManager::getInstance().loadCustomLevel("level1");
+  LevelManager::getInstance().loadCustomLevel("level3");
   
-  GameManager::getInstance().generatePlayArea("level1");
+  GameManager::getInstance().generatePlayArea("level3");
   
 
   while (window.isOpen()) {

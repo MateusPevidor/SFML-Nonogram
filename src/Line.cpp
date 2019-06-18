@@ -1,6 +1,6 @@
-#include "GuideLine.hpp"
+#include "Line.hpp"
 
-GuideLine::GuideLine(int x, int y, int w, int h) {
+Line::Line(int x, int y, int w, int h) {
   this->position.x = x;
   this->position.y = y;
   this->dimensions.x = w;
@@ -11,6 +11,6 @@ GuideLine::GuideLine(int x, int y, int w, int h) {
   this->shape.setFillColor(sf::Color(126, 126, 126));
 }
 
-void GuideLine::draw(sf::RenderWindow &window) {
+void Line::draw(sf::RenderWindow &window) {
   window.draw(this->shape);
 }
