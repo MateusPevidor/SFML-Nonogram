@@ -10,6 +10,7 @@ class LevelManager {
   private:
     LevelManager();
     std::map <std::string, Level> levels;
+    std::string currentLevel;
 
   public:
     static LevelManager& getInstance();
@@ -17,6 +18,8 @@ class LevelManager {
     void loadLevels(); // Carrega todos os níveis no diretório "levels"
     void storeLevel(std::string id, Level level); // Armazena um nível no map
     Level getLevel(std::string id);
+    Level getCurrentLevel();
+    void setCurrentLevel(std::string levelName);
 };
 
 #endif

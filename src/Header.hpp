@@ -10,7 +10,7 @@ class Header {
 
   public:
     Header();
-    Header(int value);
+    Header(int value, sf::Vector2f position, float cellSize);
     void draw(sf::RenderWindow &window);
 };
 

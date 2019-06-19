@@ -16,19 +16,9 @@ int main() {
   window.setVerticalSyncEnabled(1);
 
   FontManager::getInstance().addFont("../assets/fonts/Square.ttf");
-  LevelManager::getInstance().loadCustomLevel("level1");
+  LevelManager::getInstance().loadCustomLevel("level2");
   
-  GameManager::getInstance().generatePlayArea("level1");
-
-
-  Header asd(2);
-
-  sf::Font font = FontManager::getInstance().getFont("../assets/fonts/Square.ttf");
-  sf::Text text;
-  text.setFont(font);
-  text.setCharacterSize(70);
-  text.setFillColor(sf::Color(163, 163, 163));
-  text.setString("asd");
+  GameManager::getInstance().generatePlayArea("level2");
 
 
   while (window.isOpen()) {
@@ -41,11 +31,19 @@ int main() {
     window.clear();
     
     GameManager::getInstance().getPlayArea().draw(window);
-    asd.draw(window);
-    // window.draw(text);
     
     window.display();
   }
 
   return 0;
 }
+
+/*
+#!/bin/bash/
+
+g++ -c *.cpp -I ../dependencies/include
+g++ *.o -o sfml-app -L ../dependencies/lib -lsfml-graphics -lsfml-window -lsfml-system
+export LD_LIBRARY_PATH=../dependencies/lib
+./sfml-app
+
+ */

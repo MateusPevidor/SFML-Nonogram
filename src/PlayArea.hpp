@@ -6,19 +6,24 @@
 #include <cmath>
 #include "Cell.hpp"
 #include "Line.hpp"
+#include "Header.hpp"
+#include "LevelManager.hpp"
 
 class PlayArea {
   private:
     sf::RectangleShape background; // Fundo
-    std::vector <Line> borders; // Bordas
     sf::Vector2f position; // Posição
     sf::Vector2f dimensions; // Tamanho
+    std::vector <Line> borders; // Bordas
+    std::vector <std::vector <Header>> colHeaders; // Cabeçalhos
+    std::vector <std::vector <Header>> rowHeaders; // Cabeçalhos
+    std::vector <std::vector <Cell>> cells; // Quadrados
+    std::vector <Line> guideLines; // Linhas
   
   public:
     PlayArea();
     PlayArea(int rows, int cols, int guideSize);
-    std::vector <std::vector <Cell>> cells; // Quadrados
-    std::vector <Line> guideLines; // Linhas
+    void importHeaders(float cellSize, int guideSize);
     void draw(sf::RenderWindow &window);
 };
 

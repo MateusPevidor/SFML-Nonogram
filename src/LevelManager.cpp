@@ -57,3 +57,11 @@ Level LevelManager::getLevel(std::string id) {
   Level level = this->levels.at(id);
   return level;
 }
+
+Level LevelManager::getCurrentLevel() {
+  return this->getLevel(this->currentLevel);
+}
+
+void LevelManager::setCurrentLevel(std::string levelName) {
+  this->currentLevel = levelName;
+}

@@ -24,6 +24,8 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
     this->position.y = 112;
   }
 
+  importHeaders(cellSize, guideSize);
+
   // Criação da imagem de fundo
   this->background.setPosition(sf::Vector2f(this->position.x + 6, this->position.y + 6));
   this->background.setSize(this->dimensions);
@@ -70,13 +72,33 @@ void PlayArea::draw(sf::RenderWindow &window) {
   for (int i = 0; i < this->borders.size(); i++)
     this->borders.at(i).draw(window);
 
-  for (int i = 0; i < this->cells.size(); i++) {
-    for (int j = 0; j < this->cells.at(i).size(); j++) {
+  for (int i = 0; i < this->cells.size(); i++)
+    for (int j = 0; j < this->cells.at(i).size(); j++)
       this->cells.at(i).at(j).draw(window);
-    }
-  }
 
-  for (int i = 0; i < this->guideLines.size(); i++) {
+  for (int i = 0; i < this->guideLines.size(); i++)
     this->guideLines.at(i).draw(window);
+
+  for (int i = 0; i < this->colHeaders.size(); i++)
+    for (int j = 0; j < this->colHeaders.at(i).size(); j++)
+      this->colHeaders.at(i).at(j).draw(window);
+
+
+}
+
+void PlayArea::importHeaders(float cellSize, int guideSize) {
+  Level currentLevel = LevelManager::getInstance().getCurrentLevel();
+  for (int i = 0; i < currentLevel.getColHeaders().size(); i++) {
+    std::vector <Header> temp;
+    for (int j = 0; j < currentLevel.getColHeaders().at(i).size(); j++) {
+      temp.push_back(Header(
+        currentLevel.getColHeaders().at(i).at(j),
+        sf::Vector2f(
+          (this->position.x + cellSize * guideSize) + cellSize*(i) + 6,
+          this->position.y + cellSize*(j)
+        ),
+      cellSize));
+    }
+    this->colHeaders.push_back(temp);
   }
 }

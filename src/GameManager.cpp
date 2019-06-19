@@ -14,6 +14,7 @@ void GameManager::generatePlayArea(std::string levelID) {
       cols = level.getColCount(),
       guideSize = level.getGuideSize();
   
+  LevelManager::getInstance().setCurrentLevel(levelID);
   PlayArea generatedPlayArea(rows, cols, guideSize);
   this->setPlayArea(generatedPlayArea);
 }
