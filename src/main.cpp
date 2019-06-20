@@ -11,15 +11,14 @@
 
 #include "Header.hpp"
 
-int main() {
+int main(int argc, char* argv[]) {
   sf::RenderWindow window(sf::VideoMode(800, 800), "UltimatePix");
   window.setVerticalSyncEnabled(1);
 
   FontManager::getInstance().addFont("../assets/fonts/Square.ttf");
-  LevelManager::getInstance().loadCustomLevel("level2");
+  LevelManager::getInstance().loadCustomLevel("level1");
   
-  GameManager::getInstance().generatePlayArea("level2");
-
+  GameManager::getInstance().generatePlayArea("level1");
 
   while (window.isOpen()) {
     sf::Event event;
@@ -37,13 +36,3 @@ int main() {
 
   return 0;
 }
-
-/*
-#!/bin/bash/
-
-g++ -c *.cpp -I ../dependencies/include
-g++ *.o -o sfml-app -L ../dependencies/lib -lsfml-graphics -lsfml-window -lsfml-system
-export LD_LIBRARY_PATH=../dependencies/lib
-./sfml-app
-
- */

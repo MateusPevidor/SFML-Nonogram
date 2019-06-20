@@ -23,7 +23,7 @@ class PlayArea {
   public:
     PlayArea();
     PlayArea(int rows, int cols, int guideSize);
-    void importHeaders(float cellSize, int guideSize);
+    void importHeaders(float cellSize, int guideSize, int offsetX, int offsetY); // Transforma os números guardados no Level em texto para renderização
     void draw(sf::RenderWindow &window);
 };
 

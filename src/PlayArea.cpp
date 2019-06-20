@@ -24,7 +24,6 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
     this->position.y = 112;
   }
 
-  importHeaders(cellSize, guideSize);
 
   // Criação da imagem de fundo
   this->background.setPosition(sf::Vector2f(this->position.x + 6, this->position.y + 6));
@@ -35,9 +34,11 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
   this->borders.push_back(Line(this->position.x, this->position.y, this->dimensions.x + 12, 6));  // Superior
   this->borders.push_back(Line(this->position.x, this->dimensions.y + this->position.y + 6, this->dimensions.x + 12, 6));  // Inferior
   
-
   int offsetX = cellSize-2 + this->position.x + 6 + guideSize * cellSize + (cols-1) * cellSize - (this->dimensions.x + this->position.x + 6);
   int offsetY = cellSize-2 + this->position.y + 6 + guideSize * cellSize + (rows-1) * cellSize - (this->dimensions.y + this->position.y + 6);
+
+  importHeaders(cellSize, guideSize, offsetX, offsetY);
+
   for (int j = 0; j < rows; j++) { // Criação da matriz de quadrados
     std::vector <Cell> q;
     this->cells.push_back(q);
@@ -68,37 +69,59 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
 }
 
 void PlayArea::draw(sf::RenderWindow &window) {
+  // Fundo
   window.draw(background);
   for (int i = 0; i < this->borders.size(); i++)
     this->borders.at(i).draw(window);
 
+  // Quadrados
   for (int i = 0; i < this->cells.size(); i++)
     for (int j = 0; j < this->cells.at(i).size(); j++)
       this->cells.at(i).at(j).draw(window);
 
+  // Linhas divisoras
   for (int i = 0; i < this->guideLines.size(); i++)
     this->guideLines.at(i).draw(window);
 
-  for (int i = 0; i < this->colHeaders.size(); i++)
+  // Cabeçalhos
+  for (int i = 0; i < this->colHeaders.size(); i++) // das colunas
     for (int j = 0; j < this->colHeaders.at(i).size(); j++)
       this->colHeaders.at(i).at(j).draw(window);
 
+  for (int i = 0; i < this->rowHeaders.size(); i++) // das linhas
+    for (int j = 0; j < this->rowHeaders.at(i).size(); j++)
+      this->rowHeaders.at(i).at(j).draw(window);
 
 }
 
-void PlayArea::importHeaders(float cellSize, int guideSize) {
+void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int offsetY) {
   Level currentLevel = LevelManager::getInstance().getCurrentLevel();
   for (int i = 0; i < currentLevel.getColHeaders().size(); i++) {
     std::vector <Header> temp;
     for (int j = 0; j < currentLevel.getColHeaders().at(i).size(); j++) {
       temp.push_back(Header(
-        currentLevel.getColHeaders().at(i).at(j),
+        currentLevel.getColHeaders().at(i).at(currentLevel.getColHeaders().at(i).size()-j-1),
         sf::Vector2f(
-          (this->position.x + cellSize * guideSize) + cellSize*(i) + 6,
-          this->position.y + cellSize*(j)
+          this->position.x + (cellSize * guideSize) + cellSize*(i) + 6 - offsetX,
+          this->position.y + cellSize*(guideSize-j-1) + 6 - offsetY/guideSize*2
         ),
       cellSize));
     }
     this->colHeaders.push_back(temp);
   }
+
+  for (int i = 0; i < currentLevel.getRowHeaders().size(); i++) {
+    std::vector <Header> temp;
+    for (int j = 0; j < currentLevel.getRowHeaders().at(i).size(); j++) {
+      temp.push_back(Header(
+        currentLevel.getRowHeaders().at(i).at(currentLevel.getRowHeaders().at(i).size()-j-1),
+        sf::Vector2f(
+          this->position.x + cellSize*(guideSize-j-1) + 6 - offsetY/guideSize*2,
+          this->position.y + (cellSize * guideSize) + cellSize*(i) + 6 - offsetX
+        ),
+      cellSize));
+    }
+    this->rowHeaders.push_back(temp);
+  }
+  std::cout << offsetY << std::endl;
 }
