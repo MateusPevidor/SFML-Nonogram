@@ -68,6 +68,37 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
   }
 }
 
+void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int offsetY) {
+  Level currentLevel = LevelManager::getInstance().getCurrentLevel();
+  for (int i = 0; i < currentLevel.getColHeaders().size(); i++) {
+    std::vector <Header> temp;
+    for (int j = 0; j < currentLevel.getColHeaders().at(i).size(); j++) {
+      temp.push_back(Header(
+        currentLevel.getColHeaders().at(i).at(currentLevel.getColHeaders().at(i).size()-j-1),
+        sf::Vector2f(
+          this->position.x + (cellSize * guideSize) + cellSize*(i) + 6 - offsetX,
+          this->position.y + cellSize*(guideSize-j-1) + 8 - offsetY
+        ),
+      cellSize));
+    }
+    this->colHeaders.push_back(temp);
+  }
+
+  for (int i = 0; i < currentLevel.getRowHeaders().size(); i++) {
+    std::vector <Header> temp;
+    for (int j = 0; j < currentLevel.getRowHeaders().at(i).size(); j++) {
+      temp.push_back(Header(
+        currentLevel.getRowHeaders().at(i).at(currentLevel.getRowHeaders().at(i).size()-j-1),
+        sf::Vector2f(
+          this->position.x + cellSize*(guideSize-j-1) + 6 - offsetY,
+          this->position.y + (cellSize * guideSize) + cellSize*(i) + 6 - offsetX
+        ),
+      cellSize));
+    }
+    this->rowHeaders.push_back(temp);
+  }
+}
+
 void PlayArea::draw(sf::RenderWindow &window) {
   // Fundo
   window.draw(background);
@@ -92,36 +123,4 @@ void PlayArea::draw(sf::RenderWindow &window) {
     for (int j = 0; j < this->rowHeaders.at(i).size(); j++)
       this->rowHeaders.at(i).at(j).draw(window);
 
-}
-
-void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int offsetY) {
-  Level currentLevel = LevelManager::getInstance().getCurrentLevel();
-  for (int i = 0; i < currentLevel.getColHeaders().size(); i++) {
-    std::vector <Header> temp;
-    for (int j = 0; j < currentLevel.getColHeaders().at(i).size(); j++) {
-      temp.push_back(Header(
-        currentLevel.getColHeaders().at(i).at(currentLevel.getColHeaders().at(i).size()-j-1),
-        sf::Vector2f(
-          this->position.x + (cellSize * guideSize) + cellSize*(i) + 6 - offsetX,
-          this->position.y + cellSize*(guideSize-j-1) + 6 - offsetY/guideSize*2
-        ),
-      cellSize));
-    }
-    this->colHeaders.push_back(temp);
-  }
-
-  for (int i = 0; i < currentLevel.getRowHeaders().size(); i++) {
-    std::vector <Header> temp;
-    for (int j = 0; j < currentLevel.getRowHeaders().at(i).size(); j++) {
-      temp.push_back(Header(
-        currentLevel.getRowHeaders().at(i).at(currentLevel.getRowHeaders().at(i).size()-j-1),
-        sf::Vector2f(
-          this->position.x + cellSize*(guideSize-j-1) + 6 - offsetY/guideSize*2,
-          this->position.y + (cellSize * guideSize) + cellSize*(i) + 6 - offsetX
-        ),
-      cellSize));
-    }
-    this->rowHeaders.push_back(temp);
-  }
-  std::cout << offsetY << std::endl;
 }
