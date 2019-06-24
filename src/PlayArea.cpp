@@ -37,7 +37,7 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
   int offsetX = cellSize-2 + this->position.x + 6 + guideSize * cellSize + (cols-1) * cellSize - (this->dimensions.x + this->position.x + 6);
   int offsetY = cellSize-2 + this->position.y + 6 + guideSize * cellSize + (rows-1) * cellSize - (this->dimensions.y + this->position.y + 6);
 
-  importHeaders(cellSize, guideSize, offsetX, offsetY);
+  this->importHeaders(cellSize, guideSize, offsetX, offsetY);
 
   for (int j = 0; j < rows; j++) { // Criação da matriz de quadrados
     std::vector <Cell> q;
@@ -70,9 +70,9 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
 
 void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int offsetY) {
   Level currentLevel = LevelManager::getInstance().getCurrentLevel();
-  for (int i = 0; i < currentLevel.getColHeaders().size(); i++) {
+  for (int i = 0; i < (int) currentLevel.getColHeaders().size(); i++) {
     std::vector <Header> temp;
-    for (int j = 0; j < currentLevel.getColHeaders().at(i).size(); j++) {
+    for (int j = 0; j < (int) currentLevel.getColHeaders().at(i).size(); j++) {
       temp.push_back(Header(
         currentLevel.getColHeaders().at(i).at(currentLevel.getColHeaders().at(i).size()-j-1),
         sf::Vector2f(
@@ -84,9 +84,9 @@ void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int off
     this->colHeaders.push_back(temp);
   }
 
-  for (int i = 0; i < currentLevel.getRowHeaders().size(); i++) {
+  for (int i = 0; i < (int) currentLevel.getRowHeaders().size(); i++) {
     std::vector <Header> temp;
-    for (int j = 0; j < currentLevel.getRowHeaders().at(i).size(); j++) {
+    for (int j = 0; j < (int) currentLevel.getRowHeaders().at(i).size(); j++) {
       temp.push_back(Header(
         currentLevel.getRowHeaders().at(i).at(currentLevel.getRowHeaders().at(i).size()-j-1),
         sf::Vector2f(
@@ -102,25 +102,24 @@ void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int off
 void PlayArea::draw(sf::RenderWindow &window) {
   // Fundo
   window.draw(background);
-  for (int i = 0; i < this->borders.size(); i++)
+  for (unsigned int i = 0; i < this->borders.size(); i++)
     this->borders.at(i).draw(window);
 
   // Quadrados
-  for (int i = 0; i < this->cells.size(); i++)
-    for (int j = 0; j < this->cells.at(i).size(); j++)
+  for (unsigned int i = 0; i < this->cells.size(); i++)
+    for (unsigned int j = 0; j < this->cells.at(i).size(); j++)
       this->cells.at(i).at(j).draw(window);
 
   // Linhas divisoras
-  for (int i = 0; i < this->guideLines.size(); i++)
+  for (unsigned int i = 0; i < this->guideLines.size(); i++)
     this->guideLines.at(i).draw(window);
 
   // Cabeçalhos
-  for (int i = 0; i < this->colHeaders.size(); i++) // das colunas
-    for (int j = 0; j < this->colHeaders.at(i).size(); j++)
+  for (unsigned int i = 0; i < this->colHeaders.size(); i++) // das colunas
+    for (unsigned int j = 0; j < this->colHeaders.at(i).size(); j++)
       this->colHeaders.at(i).at(j).draw(window);
 
-  for (int i = 0; i < this->rowHeaders.size(); i++) // das linhas
-    for (int j = 0; j < this->rowHeaders.at(i).size(); j++)
+  for (unsigned int i = 0; i < this->rowHeaders.size(); i++) // das linhas
+    for (unsigned int j = 0; j < this->rowHeaders.at(i).size(); j++)
       this->rowHeaders.at(i).at(j).draw(window);
-
 }

@@ -6,9 +6,9 @@
 
 class Header {
   private:
-    sf::Text text;
 
   public:
+    sf::Text text;
     Header();
     Header(int value, sf::Vector2f position, float cellSize);
     void draw(sf::RenderWindow &window);

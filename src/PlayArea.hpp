@@ -19,11 +19,11 @@ class PlayArea {
     std::vector <std::vector <Header>> rowHeaders; // Cabeçalhos
     std::vector <std::vector <Cell>> cells; // Quadrados
     std::vector <Line> guideLines; // Linhas
+    void importHeaders(float cellSize, int guideSize, int offsetX, int offsetY); // Transforma os números guardados no Level em texto para renderização
   
   public:
     PlayArea();
     PlayArea(int rows, int cols, int guideSize);
-    void importHeaders(float cellSize, int guideSize, int offsetX, int offsetY); // Transforma os números guardados no Level em texto para renderização
     void draw(sf::RenderWindow &window);
 };
 

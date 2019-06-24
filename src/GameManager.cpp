@@ -1,4 +1,5 @@
 #include "GameManager.hpp"
+#include "ScreenManager.hpp"
 #include <iostream>
 
 GameManager::GameManager() {}
@@ -16,11 +17,13 @@ void GameManager::generatePlayArea(std::string levelID) {
   
   LevelManager::getInstance().setCurrentLevel(levelID);
   PlayArea generatedPlayArea(rows, cols, guideSize);
-  this->setPlayArea(generatedPlayArea);
+  PlayScreen *p = (PlayScreen *) ScreenManager::getInstance().getScreen(Screen::PlayScreen);
+  p->setPlayArea(generatedPlayArea);
 }
 
 PlayArea GameManager::getPlayArea() {
-  return this->playArea;
+  PlayScreen *p = (PlayScreen *) ScreenManager::getInstance().getScreen(Screen::PlayScreen);
+  return p->getPlayArea();
 }
 
 void GameManager::setPlayArea(PlayArea playArea) {
