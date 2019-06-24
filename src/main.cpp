@@ -4,13 +4,17 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
+#include "EventManager.hpp"
 #include "FontManager.hpp"
 #include "GameManager.hpp"
 #include "LevelManager.hpp"
 #include "ScreenManager.hpp"
 #include "TextureManager.hpp"
+#include "WindowManager.hpp"
 
 #include "Header.hpp"
+
+#define LEVEL "level1"
 
 int main(int argc, char* argv[]) {
   sf::RenderWindow window(
@@ -19,30 +23,27 @@ int main(int argc, char* argv[]) {
     sf::Style::Titlebar | sf::Style::Close
   );
   window.setVerticalSyncEnabled(1);
+  WindowManager::getInstance().setWindow(&window);
 
   FontManager::getInstance().addFont("../assets/fonts/Square.ttf");
-  LevelManager::getInstance().loadCustomLevel("level4");
+  LevelManager::getInstance().loadCustomLevel(LEVEL);
   ScreenManager::getInstance().createScreens();
+  ScreenManager::getInstance().setActiveScreen(Screen::PlayScreen);
 
-  GameManager::getInstance().generatePlayArea("level4");
+  GameManager::getInstance().generatePlayArea(LEVEL);
 
 
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed)
-        window.close();
-      if (event.type == sf::Event::MouseButtonPressed) {
-        std::cout << event.mouseButton.button << std::endl;
-        ScreenManager::getInstance().setActiveScreen(Screen::PlayScreen);
-      }
+      EventManager::getInstance().handleEvent(event);
     }
 
     window.clear();
     
     // GameManager::getInstance().getPlayArea().draw(window);
     
-    ScreenManager::getInstance().drawScreen(window);
+    ScreenManager::getInstance().drawScreen(*WindowManager::getInstance().getWindow());
     
     window.display();
   }

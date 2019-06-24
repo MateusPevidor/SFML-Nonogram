@@ -1,11 +1,17 @@
 #ifndef EVENT_MANAGER_HPP
 #define EVENT_MANAGER_HPP
 
-class EventHandler {
+#include <SFML/Graphics.hpp>
+#include "WindowManager.hpp"
+#include "ScreenManager.hpp"
+
+class EventManager {
   private:
+    EventManager();
 
   public:
-    int oi;
+    static EventManager& getInstance();
+    void handleEvent(sf::Event);
 };
 
 #endif

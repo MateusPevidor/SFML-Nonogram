@@ -9,7 +9,7 @@ Cell::Cell(int x, int y, int w, int h) {
   this->shape.setSize(this->dimensions);
   this->shape.setFillColor(sf::Color(163, 163, 163));
 
-  this->state = 1;
+  this->state = 0;
   
   this->crossSprite.setTexture(TextureManager::getInstance().getTexture("../assets/images/field_cross.png"));
   this->crossSprite.setPosition(sf::Vector2f(this->position.x + w * 0.126, this->position.y + h * 0.126)); // Posiciona o X no centro do quadrado
@@ -30,4 +30,8 @@ int Cell::getState() {
 
 void Cell::setState(int state) {
   this->state = state;
+}
+
+sf::Vector2f Cell::getPosition() {
+  return this->position;
 }

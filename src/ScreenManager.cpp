@@ -39,6 +39,10 @@ Screen* ScreenManager::getActiveScreen() {
   return this->screens.at(this->activeScreen);
 }
 
+Screen::ScreenType ScreenManager::getActiveScreenType() {
+  return this->activeScreen;
+}
+
 void ScreenManager::setActiveScreen(Screen::ScreenType type) {
   this->activeScreen = type;
 }

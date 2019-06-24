@@ -17,6 +17,7 @@ class ScreenManager {
     static ScreenManager& getInstance();
     Screen* getScreen(Screen::ScreenType);
     Screen* getActiveScreen();
+    Screen::ScreenType getActiveScreenType();
     void drawScreen(sf::RenderWindow &window);
     void setActiveScreen(Screen::ScreenType);
     void createScreens();

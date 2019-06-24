@@ -17,6 +17,7 @@ class Cell {
     void draw(sf::RenderWindow &window);
     int getState();
     void setState(int state);
+    sf::Vector2f getPosition();
 };
 
 #endif

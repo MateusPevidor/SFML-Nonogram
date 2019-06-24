@@ -11,6 +11,7 @@ class PlayScreen : public Screen {
   public:
     PlayArea getPlayArea();
     void setPlayArea(PlayArea playArea);
+    void handleClick(sf::Event);
     void draw(sf::RenderWindow &window);
 };
 

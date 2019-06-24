@@ -9,6 +9,13 @@
 #include "Header.hpp"
 #include "LevelManager.hpp"
 
+typedef struct { // Struct para auxílio ao lidar com cliques na tela
+  sf::Vector2f position; // Posição do primeiro quadrado
+  sf::Vector2f dimensions; // Contagem de quadrados horizontais e verticais
+  sf::Vector2f limits; // Coordenadas do limite da PlayArea
+  int cellSize;
+} PlayAreaProperties;
+
 class PlayArea {
   private:
     sf::RectangleShape background; // Fundo
@@ -20,11 +27,15 @@ class PlayArea {
     std::vector <std::vector <Cell>> cells; // Quadrados
     std::vector <Line> guideLines; // Linhas
     void importHeaders(float cellSize, int guideSize, int offsetX, int offsetY); // Transforma os números guardados no Level em texto para renderização
+    PlayAreaProperties properties;
   
   public:
     PlayArea();
     PlayArea(int rows, int cols, int guideSize);
+    PlayAreaProperties getProperties();
+    void changeCellState(int i, int j, int state);
     void draw(sf::RenderWindow &window);
+    
 };
 
 #endif

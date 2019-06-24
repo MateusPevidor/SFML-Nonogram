@@ -10,6 +10,7 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
   // Cálculo do tamanho de cada célula do campo
   float cellSize = (rows > cols) ? 622.0/(guideSize + rows) : 622.0/(guideSize + cols);
   cellSize = floor(cellSize);
+  properties.cellSize = cellSize;
 
   // Cálculo do tamanho e posição do campo em função da quantidade de células
   if (cols > rows) {
@@ -24,6 +25,7 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
     this->position.y = 112;
   }
 
+  this->properties.limits = this->dimensions + this->position + sf::Vector2f(6, 6);
 
   // Criação da imagem de fundo
   this->background.setPosition(sf::Vector2f(this->position.x + 6, this->position.y + 6));
@@ -38,6 +40,8 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
   int offsetY = cellSize-2 + this->position.y + 6 + guideSize * cellSize + (rows-1) * cellSize - (this->dimensions.y + this->position.y + 6);
 
   this->importHeaders(cellSize, guideSize, offsetX, offsetY);
+  this->properties.dimensions.x = this->colHeaders.size();
+  this->properties.dimensions.y = this->rowHeaders.size();
 
   for (int j = 0; j < rows; j++) { // Criação da matriz de quadrados
     std::vector <Cell> q;
@@ -49,6 +53,8 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
         cellSize-2, cellSize-2));
     }
   }
+  this->properties.position.x = this->position.x + 6 - offsetX + guideSize * cellSize;
+  this->properties.position.y = this->position.y + 6 - offsetY + guideSize * cellSize;
 
   // Criação das linhas que dividem o tabuleiro
   int w;
@@ -99,6 +105,15 @@ void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int off
   }
 }
 
+void PlayArea::changeCellState(int i, int j, int state) {
+  if (this->cells.at(i).at(j).getState() == 0)
+    this->cells.at(i).at(j).setState(state);
+  else if (this->cells.at(i).at(j).getState() == 1 && state == 1)
+    this->cells.at(i).at(j).setState(0);
+  else if (this->cells.at(i).at(j).getState() == 2 && state == 2)
+    this->cells.at(i).at(j).setState(0);
+}
+
 void PlayArea::draw(sf::RenderWindow &window) {
   // Fundo
   window.draw(background);
@@ -122,4 +137,8 @@ void PlayArea::draw(sf::RenderWindow &window) {
   for (unsigned int i = 0; i < this->rowHeaders.size(); i++) // das linhas
     for (unsigned int j = 0; j < this->rowHeaders.at(i).size(); j++)
       this->rowHeaders.at(i).at(j).draw(window);
+}
+
+PlayAreaProperties PlayArea::getProperties() {
+  return this->properties;
 }
