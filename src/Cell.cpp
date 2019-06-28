@@ -7,7 +7,7 @@ Cell::Cell(int x, int y, int w, int h) {
   this->dimensions.y = h;
   this->shape.setPosition(this->position);
   this->shape.setSize(this->dimensions);
-  this->shape.setFillColor(sf::Color(163, 163, 163));
+  this->shape.setFillColor(sf::Color(181, 181, 181));
 
   this->state = 0;
   

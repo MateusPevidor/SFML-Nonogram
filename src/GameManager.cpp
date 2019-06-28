@@ -26,6 +26,15 @@ PlayArea GameManager::getPlayArea() {
   return p->getPlayArea();
 }
 
-void GameManager::setPlayArea(PlayArea playArea) {
-  this->playArea = playArea;
+bool GameManager::checkWin() {
+  PlayArea playArea = this->getPlayArea();
+  for (size_t i = 0; i < playArea.getColHeaders().size(); i++)
+    for (size_t j = 0; j < playArea.getColHeaders().at(i).size(); j++)
+      if (!playArea.getColHeaders().at(i).at(j).isSolved) return false;
+  
+  for (size_t i = 0; i < playArea.getRowHeaders().size(); i++)
+    for (size_t j = 0; j < playArea.getRowHeaders().at(i).size(); j++)
+      if (!playArea.getRowHeaders().at(i).at(j).isSolved) return false;
+
+  return true;
 }

@@ -30,7 +30,7 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
   // Criação da imagem de fundo
   this->background.setPosition(sf::Vector2f(this->position.x + 6, this->position.y + 6));
   this->background.setSize(this->dimensions);
-  this->background.setFillColor(sf::Color(79, 79, 79));
+  this->background.setFillColor(sf::Color(101, 101, 101));
   this->borders.push_back(Line(this->position.x, this->position.y, 6, this->dimensions.y + 12));  // Esquerda
   this->borders.push_back(Line(this->dimensions.x + this->position.x + 6, this->position.y, 6, this->dimensions.y + 12)); // Direita
   this->borders.push_back(Line(this->position.x, this->position.y, this->dimensions.x + 12, 6));  // Superior
@@ -76,9 +76,9 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
 
 void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int offsetY) {
   Level currentLevel = LevelManager::getInstance().getCurrentLevel();
-  for (int i = 0; i < (int) currentLevel.getColHeaders().size(); i++) {
+  for (size_t i = 0; i < currentLevel.getColHeaders().size(); i++) {
     std::vector <Header> temp;
-    for (int j = 0; j < (int) currentLevel.getColHeaders().at(i).size(); j++) {
+    for (size_t j = 0; j < currentLevel.getColHeaders().at(i).size(); j++) {
       temp.push_back(Header(
         currentLevel.getColHeaders().at(i).at(currentLevel.getColHeaders().at(i).size()-j-1),
         sf::Vector2f(
@@ -90,9 +90,9 @@ void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int off
     this->colHeaders.push_back(temp);
   }
 
-  for (int i = 0; i < (int) currentLevel.getRowHeaders().size(); i++) {
+  for (size_t i = 0; i < currentLevel.getRowHeaders().size(); i++) {
     std::vector <Header> temp;
-    for (int j = 0; j < (int) currentLevel.getRowHeaders().at(i).size(); j++) {
+    for (size_t j = 0; j < currentLevel.getRowHeaders().at(i).size(); j++) {
       temp.push_back(Header(
         currentLevel.getRowHeaders().at(i).at(currentLevel.getRowHeaders().at(i).size()-j-1),
         sf::Vector2f(
@@ -114,31 +114,100 @@ void PlayArea::changeCellState(int i, int j, int state) {
     this->cells.at(i).at(j).setState(0);
 }
 
+void PlayArea::updateHeaders(int i, int j) {
+  int count = 0;
+  std::vector <int> segments;
+
+  for (size_t k = 0; k < this->cells.size(); k++) {
+    if (this->cells.at(k).at(j).getState() == 1) {
+      count++;
+      if (k == this->cells.size() - 1)
+        segments.push_back(count);
+    } else {
+      if (count) {
+        segments.push_back(count);
+        count = 0;
+      }
+    }
+  }
+
+  bool complete = true;
+  size_t size = segments.size();
+  if (size == this->colHeaders.at(j).size()) {
+    for (size_t k = 0; k < size; k++) {
+      if (!(segments.at(k) == atoi(this->colHeaders.at(j).at(size-1-k).text.getString().toAnsiString().c_str()))) {
+        complete = false;
+      }
+    }
+    for (size_t k = 0; k < this->colHeaders.at(j).size(); k++)
+      this->colHeaders.at(j).at(k).setSolved(complete);
+  }
+  
+  segments.clear();
+  count = 0;
+  for (size_t k = 0; k < this->cells.at(0).size(); k++) {
+    if (this->cells.at(i).at(k).getState() == 1) {
+      count++;
+      if (k == this->cells.at(0).size() - 1)
+        segments.push_back(count);
+    } else {
+      if (count) {
+        segments.push_back(count);
+        count = 0;
+      }
+    }
+  }
+
+  complete = true;
+  size = segments.size();
+  if (size == this->rowHeaders.at(i).size()) {
+    for (size_t k = 0; k < size; k++) {
+      if (!(segments.at(k) == atoi(this->rowHeaders.at(i).at(size-1-k).text.getString().toAnsiString().c_str()))) {
+        complete = false;
+      }
+    }
+    for (size_t k = 0; k < this->rowHeaders.at(i).size(); k++)
+      this->rowHeaders.at(i).at(k).setSolved(complete);
+  }
+}
+
 void PlayArea::draw(sf::RenderWindow &window) {
   // Fundo
   window.draw(background);
-  for (unsigned int i = 0; i < this->borders.size(); i++)
+  for (size_t i = 0; i < this->borders.size(); i++)
     this->borders.at(i).draw(window);
 
   // Quadrados
-  for (unsigned int i = 0; i < this->cells.size(); i++)
-    for (unsigned int j = 0; j < this->cells.at(i).size(); j++)
+  for (size_t i = 0; i < this->cells.size(); i++)
+    for (size_t j = 0; j < this->cells.at(i).size(); j++)
       this->cells.at(i).at(j).draw(window);
 
   // Linhas divisoras
-  for (unsigned int i = 0; i < this->guideLines.size(); i++)
+  for (size_t i = 0; i < this->guideLines.size(); i++)
     this->guideLines.at(i).draw(window);
 
   // Cabeçalhos
-  for (unsigned int i = 0; i < this->colHeaders.size(); i++) // das colunas
-    for (unsigned int j = 0; j < this->colHeaders.at(i).size(); j++)
+  for (size_t i = 0; i < this->colHeaders.size(); i++) // das colunas
+    for (size_t j = 0; j < this->colHeaders.at(i).size(); j++)
       this->colHeaders.at(i).at(j).draw(window);
 
-  for (unsigned int i = 0; i < this->rowHeaders.size(); i++) // das linhas
-    for (unsigned int j = 0; j < this->rowHeaders.at(i).size(); j++)
+  for (size_t i = 0; i < this->rowHeaders.size(); i++) // das linhas
+    for (size_t j = 0; j < this->rowHeaders.at(i).size(); j++)
       this->rowHeaders.at(i).at(j).draw(window);
 }
 
 PlayAreaProperties PlayArea::getProperties() {
   return this->properties;
+}
+
+std::vector <std::vector <Cell>> PlayArea::getCells() {
+  return this->cells;
+}
+
+std::vector <std::vector <Header>> PlayArea::getColHeaders() {
+  return this->colHeaders;
+}
+
+std::vector <std::vector <Header>> PlayArea::getRowHeaders() {
+  return this->rowHeaders;
 }

@@ -14,7 +14,7 @@
 
 #include "Header.hpp"
 
-#define LEVEL "level1"
+#define LEVEL "level4"
 
 int main(int argc, char* argv[]) {
   sf::RenderWindow window(

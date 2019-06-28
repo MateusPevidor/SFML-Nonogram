@@ -1,6 +1,8 @@
 .vscode/
 dependencies/
 compile.*
+compexec.sh
+exec.sh
 *.exe
 sfml-app
 

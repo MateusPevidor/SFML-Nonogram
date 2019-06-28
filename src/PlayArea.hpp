@@ -34,6 +34,10 @@ class PlayArea {
     PlayArea(int rows, int cols, int guideSize);
     PlayAreaProperties getProperties();
     void changeCellState(int i, int j, int state);
+    std::vector <std::vector <Cell>> getCells();
+    std::vector <std::vector <Header>> getColHeaders();
+    std::vector <std::vector <Header>> getRowHeaders();
+    void updateHeaders(int i, int j);
     void draw(sf::RenderWindow &window);
     
 };
