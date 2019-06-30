@@ -1,36 +1,30 @@
-#ifndef PLAY_SCREEN_HPP
-#define PLAY_SCREEN_HPP
+#ifndef LOAD_SAVE_SCREEN_HPP
+#define LOAD_SAVE_SCREEN_HPP
 
 #include <vector>
 #include "Screen.hpp"
-#include "PlayArea.hpp"
 #include "GameManager.hpp"
 #include "WindowManager.hpp"
 #include "Line.hpp"
 #include "ButtonClose.hpp"
-#include "ButtonPause.hpp"
-#include "ButtonHint.hpp"
 #include "ButtonSave.hpp"
 #include "ButtonLoad.hpp"
+#include "TextBox.hpp"
 
-class PlayScreen : public Screen {
+class LoadSaveScreen : public Screen {
   private:
-    PlayArea playArea;
     
     sf::RectangleShape backgroundShape;
     std::vector <Line> backgroundLines;
-
+    TextBox textBox;
     ButtonClose *buttonClose;
-    ButtonPause *buttonPause;
-    ButtonHint *buttonHint;
     ButtonSave *buttonSave;
+    ButtonLoad *buttonLoad;
 
   public:
-    PlayScreen();
-    PlayArea getPlayArea();
-    PlayArea* getPlayAreaAddress();
-    void setPlayArea(PlayArea playArea);
+    LoadSaveScreen();
     void handleClick(sf::Event);
+    void handleText(sf::Event);
     void draw(sf::RenderWindow &window);
 };
 

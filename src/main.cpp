@@ -14,9 +14,10 @@
 
 #include "Header.hpp"
 
-#define LEVEL "level4"
+#define LEVEL "level1"
 
 int main(int argc, char* argv[]) {
+  
   sf::RenderWindow window(
     sf::VideoMode(800, 800),
     "UltimatePix",
@@ -25,12 +26,15 @@ int main(int argc, char* argv[]) {
   window.setVerticalSyncEnabled(1);
   WindowManager::getInstance().setWindow(&window);
 
-  FontManager::getInstance().addFont("../assets/fonts/Square.ttf");
-  LevelManager::getInstance().loadCustomLevel(LEVEL);
+  GameManager::getInstance().loadGameAssets();
+
   ScreenManager::getInstance().createScreens();
   ScreenManager::getInstance().setActiveScreen(Screen::PlayScreen);
 
-  GameManager::getInstance().generatePlayArea(LEVEL);
+  if (argc == 1)
+    GameManager::getInstance().generatePlayArea(LEVEL);
+  else
+    GameManager::getInstance().generatePlayArea(argv[1]);
 
 
   while (window.isOpen()) {
@@ -40,8 +44,6 @@ int main(int argc, char* argv[]) {
     }
 
     window.clear();
-    
-    // GameManager::getInstance().getPlayArea().draw(window);
     
     ScreenManager::getInstance().drawScreen(*WindowManager::getInstance().getWindow());
     

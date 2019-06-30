@@ -4,10 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <cmath>
+#include "Button.hpp"
 #include "Cell.hpp"
 #include "Line.hpp"
 #include "Header.hpp"
 #include "LevelManager.hpp"
+#include "BoardPreview.hpp"
 
 typedef struct { // Struct para auxílio ao lidar com cliques na tela
   sf::Vector2f position; // Posição do primeiro quadrado
@@ -28,6 +30,7 @@ class PlayArea {
     std::vector <Line> guideLines; // Linhas
     void importHeaders(float cellSize, int guideSize, int offsetX, int offsetY); // Transforma os números guardados no Level em texto para renderização
     PlayAreaProperties properties;
+    BoardPreview *boardPreview;
   
   public:
     PlayArea();
@@ -38,6 +41,8 @@ class PlayArea {
     std::vector <std::vector <Header>> getColHeaders();
     std::vector <std::vector <Header>> getRowHeaders();
     void updateHeaders(int i, int j);
+    void updateField();
+    BoardPreview *getBoardPreview();
     void draw(sf::RenderWindow &window);
     
 };

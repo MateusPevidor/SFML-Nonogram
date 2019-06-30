@@ -10,6 +10,11 @@ PlayScreen::PlayScreen() {
   this->backgroundLines.push_back(Line(0, 794, 800, 6));
   for (size_t i = 0; i < this->backgroundLines.size(); i++)
     this->backgroundLines.at(i).setColor(101, 101, 101);
+
+  this->buttonClose = new ButtonClose(713, 31);
+  this->buttonPause = new ButtonPause(641, 31);
+  this->buttonHint = new ButtonHint(713, 713);
+  this->buttonSave = new ButtonSave(713, 641);
 }
 
 void indexFromProperties(PlayAreaProperties props, int *i, int *j, int x, int y);
@@ -22,9 +27,13 @@ PlayArea PlayScreen::getPlayArea() {
   return this->playArea;
 }
 
+PlayArea* PlayScreen::getPlayAreaAddress() {
+  return &this->playArea;
+}
+
 void PlayScreen::handleClick(sf::Event e) {
   PlayAreaProperties props = this->playArea.getProperties();
-  int x = e.mouseButton.x, 
+  int x = e.mouseButton.x,
       y = e.mouseButton.y;
   if (x >= props.position.x && x <= props.limits.x && y >= props.position.y && y <= props.limits.y) {
     int i, j, state;
@@ -32,9 +41,20 @@ void PlayScreen::handleClick(sf::Event e) {
     state = (e.mouseButton.button) ? 2 : 1;
     this->playArea.changeCellState(i, j, state);
     this->playArea.updateHeaders(i, j);
+    std::cout << "EDNERECO MAIN: " << &this->playArea << std::endl;
     if (GameManager::getInstance().checkWin())
-      std::cout << "WIN\n" << std::endl;
+      std::cout << "WIN" << std::endl;
   }
+  if (x >= 713 && x < 773 && y >= 31 && y < 91)
+    WindowManager::getInstance().getWindow()->close();
+  if (x >= 641 && x < 701 && y >= 31 && y < 91)
+    std::cout << "PAUSE" << std::endl;
+  if (x >= 713 && x < 773 && y >= 713 && y < 773)
+    std::cout << "HINT" << std::endl;
+  if (x >= 713 && x < 773 && y >= 641 && y < 701)
+    ScreenManager::getInstance().setActiveScreen(ScreenType::LoadSaveScreen);
+
+
 }
 
 void PlayScreen::draw(sf::RenderWindow &window) {
@@ -43,6 +63,10 @@ void PlayScreen::draw(sf::RenderWindow &window) {
     this->backgroundLines.at(i).draw(window);
   }
   this->playArea.draw(window);
+  this->buttonClose->draw(window);
+  this->buttonPause->draw(window);
+  this->buttonHint->draw(window);
+  this->buttonSave->draw(window);
 }
 
 void indexFromProperties(PlayAreaProperties props, int *i, int *j, int x, int y) {

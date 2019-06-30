@@ -1,4 +1,5 @@
 #include "Cell.hpp"
+#include <iostream>
 
 Cell::Cell(int x, int y, int w, int h) {
   this->position.x = x;

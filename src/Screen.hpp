@@ -7,7 +7,8 @@ class Screen {
   public:
     enum ScreenType {
       PlayScreen,
-      MenuScreen
+      MenuScreen,
+      LoadSaveScreen
     };
 };
 

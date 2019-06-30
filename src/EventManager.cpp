@@ -16,6 +16,16 @@ void EventManager::handleEvent(sf::Event event) {
     if (ScreenManager::getInstance().getActiveScreenType() == Screen::PlayScreen) {
       PlayScreen *p = (PlayScreen*) ScreenManager::getInstance().getActiveScreen();
       p->handleClick(event);
+    } else if (ScreenManager::getInstance().getActiveScreenType() == Screen::LoadSaveScreen) {
+      LoadSaveScreen *p = (LoadSaveScreen*) ScreenManager::getInstance().getActiveScreen();
+      p->handleClick(event);
+    }
+  }
+
+  if (event.type == sf::Event::TextEntered) {
+    if (ScreenManager::getInstance().getActiveScreenType() == Screen::LoadSaveScreen) {
+      LoadSaveScreen *p = (LoadSaveScreen*) ScreenManager::getInstance().getActiveScreen();
+      p->handleText(event);
     }
   }
 }

@@ -14,6 +14,9 @@ void ScreenManager::drawScreen(sf::RenderWindow &window) {
   } else if (this->activeScreen == Screen::MenuScreen) {
     MenuScreen *screen = (MenuScreen*) this->screens.at(Screen::MenuScreen);
     screen->draw(window);
+  } else if (this->activeScreen == Screen::LoadSaveScreen) {
+    LoadSaveScreen *screen = (LoadSaveScreen*) this->screens.at(Screen::LoadSaveScreen);
+    screen->draw(window);
   }
 }
 
@@ -27,8 +30,12 @@ void ScreenManager::createScreens() {
   MenuScreen *menuScreen = new(mem) MenuScreen();
   std::pair <Screen::ScreenType, Screen*> menuScreenEntry(Screen::MenuScreen, menuScreen);
   this->screens.insert(menuScreenEntry);
-  
-  this->activeScreen = Screen::MenuScreen;
+
+  mem = malloc(sizeof(LoadSaveScreen));
+  LoadSaveScreen *loadSaveScreen = new(mem) LoadSaveScreen();
+  std::pair <Screen::ScreenType, Screen*> loadSaveScreenEntry(Screen::LoadSaveScreen, loadSaveScreen);
+  this->screens.insert(loadSaveScreenEntry);
+
 }
 
 Screen* ScreenManager::getScreen(Screen::ScreenType type) {

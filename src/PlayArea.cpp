@@ -5,8 +5,6 @@ PlayArea::PlayArea() {}
 
 PlayArea::PlayArea(int rows, int cols, int guideSize) {
 
-  TextureManager::getInstance().addTexture("../assets/images/field_cross.png");
-
   // Cálculo do tamanho de cada célula do campo
   float cellSize = (rows > cols) ? 622.0/(guideSize + rows) : 622.0/(guideSize + cols);
   cellSize = floor(cellSize);
@@ -45,13 +43,14 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
 
   for (int j = 0; j < rows; j++) { // Criação da matriz de quadrados
     std::vector <Cell> q;
-    this->cells.push_back(q);
     for (int i = 0; i < cols; i++) {
-      this->cells.at(j).push_back(Cell(
+      q.push_back(Cell(
         (this->position.x + 6 - offsetX + guideSize * cellSize + i * cellSize),
         (this->position.y + 6 - offsetY + guideSize * cellSize + j * cellSize),
-        cellSize-2, cellSize-2));
+        cellSize-2, cellSize-2
+      ));
     }
+    this->cells.push_back(q);
   }
   this->properties.position.x = this->position.x + 6 - offsetX + guideSize * cellSize;
   this->properties.position.y = this->position.y + 6 - offsetY + guideSize * cellSize;
@@ -72,6 +71,17 @@ PlayArea::PlayArea(int rows, int cols, int guideSize) {
       this->position.y + 4 - offsetY + guideSize * cellSize + (i) * cellSize,
       this->dimensions.x, w));
   }
+  
+  sf::Vector2f previewDimensions(
+    this->position.x + 6 - offsetX + guideSize * cellSize - this->position.x - 20,
+    this->position.y + 6 - offsetY + guideSize * cellSize - this->position.y - 20
+  );
+
+  this->boardPreview = new BoardPreview(
+    rows, cols,
+    this->position + sf::Vector2f(12, 12),
+    previewDimensions
+  );
 }
 
 void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int offsetY) {
@@ -106,12 +116,15 @@ void PlayArea::importHeaders(float cellSize, int guideSize, int offsetX, int off
 }
 
 void PlayArea::changeCellState(int i, int j, int state) {
-  if (this->cells.at(i).at(j).getState() == 0)
+  if (this->cells.at(i).at(j).getState() == 0) {
     this->cells.at(i).at(j).setState(state);
-  else if (this->cells.at(i).at(j).getState() == 1 && state == 1)
+    if (state == 1) this->boardPreview->updateCell(i, j, state);
+  } else if (this->cells.at(i).at(j).getState() == 1 && state == 1) {
     this->cells.at(i).at(j).setState(0);
-  else if (this->cells.at(i).at(j).getState() == 2 && state == 2)
+    this->boardPreview->updateCell(i, j, 0);
+  } else if (this->cells.at(i).at(j).getState() == 2 && state == 2) {
     this->cells.at(i).at(j).setState(0);
+  }
 }
 
 void PlayArea::updateHeaders(int i, int j) {
@@ -141,6 +154,9 @@ void PlayArea::updateHeaders(int i, int j) {
     }
     for (size_t k = 0; k < this->colHeaders.at(j).size(); k++)
       this->colHeaders.at(j).at(k).setSolved(complete);
+  } else {
+    for (size_t k = 0; k < this->colHeaders.at(j).size(); k++)
+      this->colHeaders.at(j).at(k).setSolved(false);
   }
   
   segments.clear();
@@ -168,7 +184,20 @@ void PlayArea::updateHeaders(int i, int j) {
     }
     for (size_t k = 0; k < this->rowHeaders.at(i).size(); k++)
       this->rowHeaders.at(i).at(k).setSolved(complete);
+  } else {
+    for (size_t k = 0; k < this->rowHeaders.at(i).size(); k++)
+      this->rowHeaders.at(i).at(k).setSolved(false);
   }
+}
+
+void PlayArea::updateField() {
+  for (size_t i = 0; i < this->boardPreview->getCells().size(); i++)
+    for (size_t j = 0; j < this->boardPreview->getCells().at(i).size(); j++)
+      this->changeCellState(i, j, this->boardPreview->getCells().at(i).at(j).getState());
+}
+
+BoardPreview* PlayArea::getBoardPreview() {
+  return this->boardPreview;
 }
 
 void PlayArea::draw(sf::RenderWindow &window) {
@@ -194,6 +223,8 @@ void PlayArea::draw(sf::RenderWindow &window) {
   for (size_t i = 0; i < this->rowHeaders.size(); i++) // das linhas
     for (size_t j = 0; j < this->rowHeaders.at(i).size(); j++)
       this->rowHeaders.at(i).at(j).draw(window);
+
+  this->boardPreview->draw(window);
 }
 
 PlayAreaProperties PlayArea::getProperties() {

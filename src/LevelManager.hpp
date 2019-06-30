@@ -20,6 +20,7 @@ class LevelManager {
     Level getLevel(std::string id);
     Level getCurrentLevel();
     void setCurrentLevel(std::string levelName);
+    std::string getCurrentLevelName();
 };
 
 #endif
