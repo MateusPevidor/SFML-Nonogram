@@ -30,10 +30,13 @@ int main(int argc, char* argv[]) {
   ScreenManager::getInstance().createScreens();
   ScreenManager::getInstance().setActiveScreen(Screen::PlayScreen);
 
-  if (argc == 1)
-    GameManager::getInstance().generatePlayArea(LEVEL);
-  else
+  if (argc != 1) { // Se não foi passado nenhum parâmetro carrega o nível do #define
+    LevelManager::getInstance().loadCustomLevel(argv[1]);
     GameManager::getInstance().generatePlayArea(argv[1]);
+  } else { // Carrega o nível do #define se nenhum parâmetro foi passado (tem que ser carregado no construtor do GameManager)
+    GameManager::getInstance().generatePlayArea(LEVEL);
+  }
+
 
 
   while (window.isOpen()) {
