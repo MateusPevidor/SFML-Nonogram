@@ -2,7 +2,6 @@
 #define LINE_HPP
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 class Line { // Linhas que dividem o tabuleiro
   private:

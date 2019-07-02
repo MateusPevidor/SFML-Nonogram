@@ -2,7 +2,6 @@
 #define HEADER_HPP
 
 #include <SFML/Graphics.hpp>
-#include <iostream>
 
 class Header {
   private:

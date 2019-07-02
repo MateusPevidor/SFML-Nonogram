@@ -5,8 +5,8 @@
 
 #include "Screen.hpp"
 #include "PlayScreen.hpp"
-#include "MenuScreen.hpp"
 #include "LoadSaveScreen.hpp"
+#include "VictoryScreen.hpp"
 
 class ScreenManager {
   private:

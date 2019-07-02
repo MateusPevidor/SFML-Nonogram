@@ -18,6 +18,13 @@ class GameManager {
     PlayArea getPlayArea();
     void setPlayArea(PlayArea playArea);
     bool checkWin();
+    void fillZeros(PlayArea *playArea, bool mustSolve);
+    void solve();
+    void fillCol(int j, PlayArea* playArea);
+    void fillHalfCol(int j, PlayArea* playArea);
+    void fillRow(int i, PlayArea* playArea);
+    void fillHalfRow(int i, PlayArea* playArea);
+    void solveCompleteHeaders(PlayArea* playArea);
     void saveProgress(std::string filename);
     void loadSavegame(std::string filename);
 };

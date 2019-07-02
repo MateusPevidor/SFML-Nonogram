@@ -1,5 +1,4 @@
 #include "LevelManager.hpp"
-#include <iostream>
 
 LevelManager::LevelManager() {}
 

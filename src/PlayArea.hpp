@@ -37,6 +37,8 @@ class PlayArea {
     PlayArea(int rows, int cols, int guideSize);
     PlayAreaProperties getProperties();
     void changeCellState(int i, int j, int state);
+    void forceCellState(int i, int j, int state);
+    void updateHeaderZero(int i, bool orientation);
     std::vector <std::vector <Cell>> getCells();
     std::vector <std::vector <Header>> getColHeaders();
     std::vector <std::vector <Header>> getRowHeaders();

@@ -1,5 +1,4 @@
 #include "PlayArea.hpp"
-#include <iostream>
 
 PlayArea::PlayArea() {}
 
@@ -127,6 +126,17 @@ void PlayArea::changeCellState(int i, int j, int state) {
   }
 }
 
+void PlayArea::forceCellState(int i, int j, int state) {
+  this->cells.at(i).at(j).setState(state);
+  if (state == 1) this->boardPreview->updateCell(i, j, state);
+}
+
+void PlayArea::updateHeaderZero(int i, bool orientation) {
+  if (orientation) {
+    // this->colHeaders.at(i).at(0).setSolved()
+  }
+}
+
 void PlayArea::updateHeaders(int i, int j) {
   int count = 0;
   std::vector <int> segments;
@@ -146,7 +156,7 @@ void PlayArea::updateHeaders(int i, int j) {
 
   bool complete = true;
   size_t size = segments.size();
-  if (size == this->colHeaders.at(j).size()) {
+  if (size == this->colHeaders.at(j).size() || this->colHeaders.at(j).at(0).text.getString() == "0") {
     for (size_t k = 0; k < size; k++) {
       if (!(segments.at(k) == atoi(this->colHeaders.at(j).at(size-1-k).text.getString().toAnsiString().c_str()))) {
         complete = false;

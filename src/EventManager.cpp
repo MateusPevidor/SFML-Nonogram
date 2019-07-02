@@ -1,5 +1,4 @@
 #include "EventManager.hpp"
-#include <iostream>
 
 EventManager::EventManager() {}
 

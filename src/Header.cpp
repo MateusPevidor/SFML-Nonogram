@@ -1,6 +1,5 @@
 #include "Header.hpp"
 #include "FontManager.hpp"
-#include <iostream>
 
 Header::Header() {}
 

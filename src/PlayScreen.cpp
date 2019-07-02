@@ -41,16 +41,14 @@ void PlayScreen::handleClick(sf::Event e) {
     state = (e.mouseButton.button) ? 2 : 1;
     this->playArea.changeCellState(i, j, state);
     this->playArea.updateHeaders(i, j);
-    std::cout << "EDNERECO MAIN: " << &this->playArea << std::endl;
     if (GameManager::getInstance().checkWin())
-      std::cout << "WIN" << std::endl;
+      ScreenManager::getInstance().setActiveScreen(Screen::VictoryScreen);
   }
   if (x >= 713 && x < 773 && y >= 31 && y < 91)
     WindowManager::getInstance().getWindow()->close();
-  if (x >= 641 && x < 701 && y >= 31 && y < 91)
-    std::cout << "PAUSE" << std::endl;
+  // if (x >= 641 && x < 701 && y >= 31 && y < 91) BOTAO DE PAUSE
   if (x >= 713 && x < 773 && y >= 713 && y < 773)
-    std::cout << "HINT" << std::endl;
+    GameManager::getInstance().solve();
   if (x >= 713 && x < 773 && y >= 641 && y < 701)
     ScreenManager::getInstance().setActiveScreen(ScreenType::LoadSaveScreen);
 
